@@ -36,8 +36,28 @@ print(mijnKwadraat)
 
 # Maak 5 functies die allemaal in een andere taal "Goedemorgen" printen.
 # Roep daarna elke functie minimaal 2 keer aan (callen) waardoor er minimaal 10 keer "Goedemorgen" naar de console wordt geprint!
+def groet1():
+  print("Goedemorgen")
 
+def groet2():
+  print("Good morning")
 
+def groet3():
+  print("Guten Morgen")
 
+def groet4():
+  print("Bonjour")
 
+def groet5():
+  print("Buen día")
 
+groet1()
+groet2()
+groet3()
+groet4()
+groet5()
+groet1()
+groet2()
+groet3()
+groet4()
+groet5()
