@@ -5,10 +5,10 @@ Van de weg is echter nog geen rectangle gemaakt.
 
 Doe het volgende:
 
-  - Maak een rectangle van de weg met surface.get_rect()
-  - Zorg dat de center van deze rectangle in het midden van de game staat (weg precies in het midden)
-  - Zorg dat de onderkant van de auto (bottom) op dezelfde plek staat als de onderkant van de weg (dan rijdt de auto namelijk op de weg)
-  - Zorg dat wanneer de auto en het obstakel colliden je de auto weer naar het begin van het scherm verplaatst (de pion staat pas op de goede plek als de weg is verplaatst)
+  // - Maak een rectangle van de weg met surface.get_rect()
+  // - Zorg dat de center van deze rectangle in het midden van de game staat (weg precies in het midden)
+  // - Zorg dat de onderkant van de auto (bottom) op dezelfde plek staat als de onderkant van de weg (dan rijdt de auto namelijk op de weg)
+  // - Zorg dat wanneer de auto en het obstakel colliden je de auto weer naar het begin van het scherm verplaatst (de pion staat pas op de goede plek als de weg is verplaatst)
 
 Vergeet niet om de weg_surface naar de weg_rect te blitten in plaats van naar een aantal coordinaten!
 
@@ -34,12 +34,13 @@ background_surface = pygame.Surface((800, 400))
 background_surface.fill("white")
 
 weg_surface = pygame.image.load("Opdrachten/PyGame/Les4/graphics/weg.png").convert()
+weg_rect = weg_surface.get_rect(center = (400, 200))
 
 auto_surface = pygame.image.load("Opdrachten/PyGame/Les4/graphics/auto.png").convert_alpha()
-auto_rect = auto_surface.get_rect(bottom = 350)
+auto_rect = auto_surface.get_rect(bottom = 290)
 
 obstakel_surface = pygame.image.load("Opdrachten/PyGame/Les4/graphics/obstakel.png").convert_alpha()
-obstakel_rect = obstakel_surface.get_rect(bottomleft = (625, 280))
+obstakel_rect = obstakel_surface.get_rect(bottomleft = (625, 285))
 
 while running:
 
@@ -48,9 +49,12 @@ while running:
       running = False
 
   screen.blit(background_surface, (0, 0))
-  screen.blit(weg_surface, (0, 75))
+  screen.blit(weg_surface, weg_rect)
   screen.blit(obstakel_surface, obstakel_rect)
   
+  if auto_rect.colliderect(obstakel_rect):
+    auto_rect.right = 0
+
   auto_rect.left += 2
   if auto_rect.left > 800:
     auto_rect.right = 0

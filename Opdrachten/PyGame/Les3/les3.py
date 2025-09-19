@@ -32,6 +32,9 @@ while running:
 
     screen.blit(background_surface, (0, 0))
 
+    if auto_x_pos > 800:
+      auto_x_pos = 0
+
     auto_x_pos += 1
     screen.blit(auto_surface, (auto_x_pos, 200))
 
