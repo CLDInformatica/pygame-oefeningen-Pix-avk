@@ -2,8 +2,8 @@
 
 # Gegeven is een variabele game_actief, deze is True, doe het volgende:
 
-#   - Als game_actief True is moet alle code van de game werken, zet deze code dus in een if
-#   - Als pikachu collide met de tekst "Dood!" maak game_actief dan False
+#   // - Als game_actief True is moet alle code van de game werken, zet deze code dus in een if
+#   // - Als pikachu collide met de tekst "Dood!" maak game_actief dan False
 #   - Als game_actief False is, maak het scherm dan zwart en zet pikachu weer in het midden van het scherm
 #   - Als de speler dan op spatie drukt, start het spel dan opnieuw (game_actief = True)
 
@@ -18,6 +18,8 @@ pygame.init()
 screen = pygame.display.set_mode((400, 300))
 pygame.display.set_caption('Keyboard en zwaartekracht')
 font = pygame.font.Font(None, 50)
+font2 = pygame.font.Font(None, 25)
+
 clock = pygame.time.Clock()
 
 background_surface = pygame.Surface((400, 300))
@@ -29,8 +31,20 @@ enemy_rect = enemy_surface.get_rect(center= (300, 200))
 pikachu_surface = pygame.image.load("Opdrachten/PyGame/Les7/graphics/pikachu.png").convert_alpha()
 pikachu_rect = pikachu_surface.get_rect(topleft = (180, 20))
 
+tekst1_surface = font.render("Game over!", False, "red")
+tekst1_rect = tekst1_surface.get_rect(center= (200, 50))
+
+tekst2_sur = font2.render("Press SPACE to play again", False, "gray")
+tekst2_rect = tekst2_sur.get_rect(center= (200, 85))
+
+
+bg2_sur = pygame.Surface((400, 300))
+bg2_sur.fill("black")
+
 zwaartekracht = 0
 game_actief = True
+
+
 
 while True:
   
@@ -38,26 +52,45 @@ while True:
     if event.type == QUIT:
       pygame.quit()
       sys.exit() 
-      
-    if event.type == pygame.KEYDOWN:
-      if event.key == pygame.K_SPACE and pikachu_rect.bottom >= 300:
-        zwaartekracht = -20
 
-  screen.blit(background_surface, (0, 0))
-  screen.blit(enemy_surface, enemy_rect)
+    if game_actief == True:
+      if event.type == pygame.KEYDOWN:
+        if event.key == pygame.K_SPACE and pikachu_rect.bottom >= 300:
+          zwaartekracht = -20
+    else:
+      if event.type == pygame.KEYDOWN:
+        if event.key == pygame.K_SPACE:
+          game_actief = True
+          print("restart")   
 
-  zwaartekracht += 1
-  pikachu_rect.y += zwaartekracht
+  if game_actief == True:
+    screen.blit(background_surface, (0, 0))
+    screen.blit(enemy_surface, enemy_rect)
 
-  if pikachu_rect.bottom >= 300:
-    pikachu_rect.bottom = 300
+    zwaartekracht += 1
+    pikachu_rect.y += zwaartekracht
 
-  keys = pygame.key.get_pressed()
-  if keys[pygame.K_RIGHT] and pikachu_rect.right + 6 <= 400:
-    pikachu_rect.x += 6
-  if keys[pygame.K_LEFT] and pikachu_rect.left - 6 >= 0:
-    pikachu_rect.x -= 6
-  
+    if pikachu_rect.bottom >= 300:
+      pikachu_rect.bottom = 300
+
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_RIGHT] and pikachu_rect.right + 6 <= 400:
+      pikachu_rect.x += 6
+    if keys[pygame.K_LEFT] and pikachu_rect.left - 6 >= 0:
+      pikachu_rect.x -= 6
+
+    if pikachu_rect.colliderect(enemy_rect):
+      game_actief = False
+    
+  else:
+    screen.blit(bg2_sur, (0,0))
+    screen.blit(tekst1_surface, tekst1_rect)
+    screen.blit(tekst2_sur, tekst2_rect) 
+    pikachu_rect.center = (200, 150)  
+    
+    
+
+
   screen.blit(pikachu_surface, pikachu_rect)
 
   pygame.display.update()

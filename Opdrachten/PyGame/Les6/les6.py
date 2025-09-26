@@ -2,10 +2,10 @@
 
 # Voeg de volgende dingen toe:
 
-#   - Zorg dat pikachu niet meerdere keren achter elkaar kan springen (check of pikachu op de grond staat!)
-#   - Laat pikachu naar rechts lopen met het rechter pijltje (je moet elke keer opnieuw klikken, hier hebben we het later over!)
-#   - Laat pikachu naar links lopen met het linker pijltje
-#   - Zorg dat pikachu niet uit het scherm kan lopen
+#   // - Zorg dat pikachu niet meerdere keren achter elkaar kan springen (check of pikachu op de grond staat!)
+#   // - Laat pikachu naar rechts lopen met het rechter pijltje (je moet elke keer opnieuw klikken, hier hebben we het later over!)
+#   // - Laat pikachu naar links lopen met het linker pijltje
+#   // - Zorg dat pikachu niet uit het scherm kan lopen
 
 
 # Slides: https://docs.google.com/presentation/d/1tbN7TAxkqwNQWe_fMOwF1KD4o2V5aJktcSooPF9WZaY/edit?usp=sharing
@@ -36,8 +36,13 @@ while True:
       sys.exit() 
       
     if event.type == pygame.KEYDOWN:
-      if event.key == pygame.K_SPACE:
-        zwaartekracht = -20
+      if event.key == pygame.K_SPACE or event.key == pygame.K_UP:
+        if pikachu_rect.bottom == 300:
+          zwaartekracht = -20
+      if event.key == pygame.K_a or event.key == pygame.K_LEFT:
+        pikachu_rect.x -= 4
+      if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
+        pikachu_rect.x += 4
 
   screen.blit(background_surface, (0, 0))
  
@@ -46,6 +51,12 @@ while True:
 
   if pikachu_rect.bottom >= 300:
     pikachu_rect.bottom = 300
+
+  if pikachu_rect.right >= 400:
+    pikachu_rect.right = 400
+
+  if pikachu_rect.left <= 0:
+    pikachu_rect.left = 0
   
   screen.blit(pikachu_surface, pikachu_rect)
 
