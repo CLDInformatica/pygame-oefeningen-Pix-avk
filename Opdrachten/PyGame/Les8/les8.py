@@ -13,16 +13,18 @@ import pygame, sys
 from pygame.locals import QUIT
 
 def score():
-  time = pygame.time.get_ticks()
+  time = pygame.time.get_ticks()/1000
   score_surface = font.render(str(time), False, "orange")
   score_rect = score_surface.get_rect(center = (200, 100))
   screen.blit(score_surface, score_rect)
+
 
 pygame.init()
 screen = pygame.display.set_mode((400, 300))
 pygame.display.set_caption('Score')
 font = pygame.font.Font(None, 50)
 clock = pygame.time.Clock()
+font2 = pygame.font.Font(None, 25)
 
 background_surface = pygame.Surface((400, 300))
 background_surface.fill("white")
@@ -32,6 +34,13 @@ enemy_rect = enemy_surface.get_rect(center= (300, 200))
 
 pikachu_surface = pygame.image.load("Opdrachten/PyGame/Les8/graphics/pikachu.png").convert_alpha()
 pikachu_rect = pikachu_surface.get_rect(topleft = (180, 20))
+
+
+tekst1_surface = font.render("Game over!", False, "red")
+tekst1_rect = tekst1_surface.get_rect(center= (200, 50))
+
+tekst2_sur = font2.render("Press SPACE to play again", False, "gray")
+tekst2_rect = tekst2_sur.get_rect(center= (200, 85))
 
 zwaartekracht = 0
 game_actief = True
@@ -74,7 +83,10 @@ while True:
     screen.blit(pikachu_surface, pikachu_rect)
   else:
     screen.fill("black")
+    screen.blit(tekst1_surface, tekst1_rect)
+    screen.blit(tekst2_sur, tekst2_rect) 
     pikachu_rect.topleft = (180, 20)
+    
 
   pygame.display.update()
   clock.tick(60)
